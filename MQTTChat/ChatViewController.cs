@@ -29,9 +29,14 @@ namespace TestApp
 			mqttFactory = new MqttFactory();
 			mqttClient = mqttFactory.CreateMqttClient();
 
-
+			
 			connect();
 			// Do any additional setup after loading the view.
+		}
+
+		public override void ViewWillAppear()
+        {
+			View.Window.Title = "Chat (Your name is: " + username + ")";
 		}
 
 		public async Task connect()
