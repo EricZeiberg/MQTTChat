@@ -160,18 +160,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rji-19-di7">
+                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rji-19-di7">
                                 <rect key="frame" x="20" y="253" width="410" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Username" drawsBackground="YES" id="e95-Ei-9aY">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2bN-0s-fIG">
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2bN-0s-fIG">
                                 <rect key="frame" x="188" y="166" width="75" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="61" id="pwd-75-zKW"/>
+                                </constraints>
                                 <buttonCell key="cell" type="push" title="GO" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xts-Ee-MSw">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -181,9 +182,28 @@
                                     <segue destination="XfG-lQ-9wD" kind="show" identifier="LaunchChat" id="cnE-nG-eDt"/>
                                 </connections>
                             </button>
+                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JsC-o3-vTk">
+                                <rect key="frame" x="20" y="222" width="410" height="21"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Topic" drawsBackground="YES" id="FfC-k6-oOi">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="2bN-0s-fIG" firstAttribute="top" secondItem="JsC-o3-vTk" secondAttribute="bottom" constant="29" id="0bo-FW-7Oc"/>
+                            <constraint firstItem="rji-19-di7" firstAttribute="leading" secondItem="JsC-o3-vTk" secondAttribute="leading" id="4lC-d6-xRK"/>
+                            <constraint firstAttribute="trailing" secondItem="rji-19-di7" secondAttribute="trailing" constant="20" symbolic="YES" id="KbE-iW-o2q"/>
+                            <constraint firstItem="rji-19-di7" firstAttribute="top" secondItem="2UF-NV-qWY" secondAttribute="top" constant="26" id="NGS-W7-Dv8"/>
+                            <constraint firstItem="rji-19-di7" firstAttribute="leading" secondItem="2UF-NV-qWY" secondAttribute="leading" constant="20" symbolic="YES" id="QOf-GJ-rwA"/>
+                            <constraint firstItem="rji-19-di7" firstAttribute="trailing" secondItem="JsC-o3-vTk" secondAttribute="trailing" id="RQe-Zv-4dV"/>
+                            <constraint firstItem="JsC-o3-vTk" firstAttribute="centerX" secondItem="2bN-0s-fIG" secondAttribute="centerX" id="SII-1Z-bDZ"/>
+                            <constraint firstItem="JsC-o3-vTk" firstAttribute="top" secondItem="rji-19-di7" secondAttribute="bottom" constant="10" symbolic="YES" id="fjI-gp-8vm"/>
+                        </constraints>
                     </view>
                     <connections>
+                        <outlet property="topicTextField" destination="JsC-o3-vTk" id="VNN-VX-MdK"/>
                         <outlet property="usernameTextField" destination="rji-19-di7" id="abc-FL-7B2"/>
                     </connections>
                 </viewController>

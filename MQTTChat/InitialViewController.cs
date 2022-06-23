@@ -23,6 +23,7 @@ namespace TestApp
                     {
                         ChatViewController target = segue.DestinationController as ChatViewController;
                         target.username = usernameTextField.StringValue;
+                        target.topic = "chat/" + topicTextField.StringValue;
                         View.Window.Close();
                     }
                     break;

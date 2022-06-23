@@ -18,7 +18,7 @@ namespace TestApp
 		MqttFactory mqttFactory;
 		IMqttClient mqttClient;
 		public string username { get; set; }
-		string topic = "home/temperature";
+		public string topic { get; set; }
 		public ChatViewController(IntPtr handle) : base(handle)
 		{
 		}
