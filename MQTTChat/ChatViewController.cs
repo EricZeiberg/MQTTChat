@@ -102,7 +102,7 @@ namespace TestApp
 				Console.WriteLine($"Topic: {topic}. Message Received: {payload}");
 
 				InvokeOnMainThread(() => {
-					messageView.StringValue = messageView.StringValue + "\n" + clientID + ": " + text;
+					messageView.Value = messageView.Value + "\n" + clientID + ": " + text;
 				});
 			}
 		}

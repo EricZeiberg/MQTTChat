@@ -9,30 +9,28 @@ using System.CodeDom.Compiler;
 
 namespace TestApp
 {
-	[Register("ChatViewController")]
+	[Register ("ChatViewController")]
 	partial class ChatViewController
 	{
 		[Outlet]
-		AppKit.NSTextField messageView { get; set; }
+		AppKit.NSTextView messageView { get; set; }
 
 		[Outlet]
 		AppKit.NSTextField textField { get; set; }
 
-		[Action("buttonClicked:")]
-		partial void buttonClicked(Foundation.NSObject sender);
-
-		void ReleaseDesignerOutlets()
+		[Action ("buttonClicked:")]
+		partial void buttonClicked (Foundation.NSObject sender);
+		
+		void ReleaseDesignerOutlets ()
 		{
-			if (textField != null)
-			{
-				textField.Dispose();
-				textField = null;
+			if (messageView != null) {
+				messageView.Dispose ();
+				messageView = null;
 			}
 
-			if (messageView != null)
-			{
-				messageView.Dispose();
-				messageView = null;
+			if (textField != null) {
+				textField.Dispose ();
+				textField = null;
 			}
 		}
 	}
