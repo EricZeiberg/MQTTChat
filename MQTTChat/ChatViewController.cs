@@ -17,6 +17,8 @@ namespace TestApp
 	{
 		MqttFactory mqttFactory;
 		IMqttClient mqttClient;
+		Random rnd;
+		NSColor color;
 		private string username;
 		public string Username
 		{
@@ -25,7 +27,6 @@ namespace TestApp
 			{
 				if (string.IsNullOrWhiteSpace(value))
 				{
-					Random rnd = new Random();
 					int num = rnd.Next(1, 999);
 					username = "User" + num;
                 }
@@ -57,7 +58,7 @@ namespace TestApp
 		private string topic;
 		public ChatViewController(IntPtr handle) : base(handle)
 		{
-
+			rnd = new Random();
 		}
 
 		public override void ViewDidLoad()
@@ -75,6 +76,7 @@ namespace TestApp
         {
 			View.Window.Title = "Chat (Your name is: " + username + ")";
 			topicLabel.StringValue = "Topic: " + topic;
+			color = NSColor.FromRgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
 		}
 
 		public async Task connect()
@@ -140,7 +142,20 @@ namespace TestApp
 				Console.WriteLine($"Topic: {topic}. Message Received: {payload}");
 
 				InvokeOnMainThread(() => {
-					messageView.Value = messageView.Value + "\n" + clientID + ": " + text;
+					NSAttributedString clientIDAttr = new NSAttributedString(
+						clientID + ": ",
+						font: NSFont.FromFontName("Helvetica Bold", 12f),
+						foregroundColor: color
+						);
+					NSAttributedString messageAttr = new NSAttributedString(
+						text + "\n",
+						font: NSFont.FromFontName("Helvetica", 12f)
+						);
+					NSMutableAttributedString finalString = new NSMutableAttributedString(messageView.GetAttributedString());
+					finalString.Append(clientIDAttr);
+					finalString.Append(messageAttr);
+					
+					messageView.TextStorage.SetString(finalString); 
 				});
 			}
 		}
