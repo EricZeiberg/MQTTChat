@@ -22,8 +22,8 @@ namespace TestApp
                 case "LaunchChat":
                     {
                         ChatViewController target = segue.DestinationController as ChatViewController;
-                        target.username = usernameTextField.StringValue;
-                        target.topic = "chat/" + topicTextField.StringValue;
+                        target.Username = usernameTextField.StringValue;
+                        target.Topic = topicTextField.StringValue;
                         View.Window.Close();
                     }
                     break;
