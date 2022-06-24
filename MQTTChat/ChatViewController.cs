@@ -57,6 +57,7 @@ namespace TestApp
 		private string topic;
 		public ChatViewController(IntPtr handle) : base(handle)
 		{
+
 		}
 
 		public override void ViewDidLoad()
@@ -73,6 +74,7 @@ namespace TestApp
 		public override void ViewWillAppear()
         {
 			View.Window.Title = "Chat (Your name is: " + username + ")";
+			topicLabel.StringValue = "Topic: " + topic;
 		}
 
 		public async Task connect()
