@@ -17,10 +17,47 @@ namespace TestApp
 	{
 		MqttFactory mqttFactory;
 		IMqttClient mqttClient;
-		public string username { get; set; }
-		string topic = "home/temperature";
+		private string username;
+		public string Username
+		{
+			get { return username; }
+			set
+			{
+				if (string.IsNullOrWhiteSpace(value))
+				{
+					Random rnd = new Random();
+					int num = rnd.Next(1, 999);
+					username = "User" + num;
+                }
+				else
+                {
+					username = value;
+				}
+				
+			}
+		}
+		public string Topic
+		{
+			get { return topic; }
+			set
+			{
+				if (string.IsNullOrWhiteSpace(value))
+				{
+					Random rnd = new Random();
+					int num = rnd.Next(1, 999);
+					topic = "chat/topic" + num;
+				}
+				else
+				{
+					topic = "chat/" + value;
+				}
+
+			}
+		}
+		private string topic;
 		public ChatViewController(IntPtr handle) : base(handle)
 		{
+
 		}
 
 		public override void ViewDidLoad()
@@ -37,6 +74,7 @@ namespace TestApp
 		public override void ViewWillAppear()
         {
 			View.Window.Title = "Chat (Your name is: " + username + ")";
+			topicLabel.StringValue = "Topic: " + topic;
 		}
 
 		public async Task connect()
@@ -120,7 +158,8 @@ namespace TestApp
 			}
 		}
 
-		partial void buttonClicked(NSObject sender)
+
+        partial void buttonClicked(NSObject sender)
 		{
 
 			_ = sendMessage(textField.StringValue);

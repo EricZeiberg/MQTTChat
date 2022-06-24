@@ -13,6 +13,9 @@ namespace TestApp
 	partial class InitialViewController
 	{
 		[Outlet]
+		AppKit.NSTextField topicTextField { get; set; }
+
+		[Outlet]
 		AppKit.NSTextField usernameTextField { get; set; }
 
 		[Action ("goButtonPress:")]
@@ -23,6 +26,11 @@ namespace TestApp
 			if (usernameTextField != null) {
 				usernameTextField.Dispose ();
 				usernameTextField = null;
+			}
+
+			if (topicTextField != null) {
+				topicTextField.Dispose ();
+				topicTextField = null;
 			}
 		}
 	}

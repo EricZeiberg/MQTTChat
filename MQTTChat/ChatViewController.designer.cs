@@ -18,6 +18,9 @@ namespace TestApp
 		[Outlet]
 		AppKit.NSTextField textField { get; set; }
 
+		[Outlet]
+		AppKit.NSTextField topicLabel { get; set; }
+
 		[Action ("buttonClicked:")]
 		partial void buttonClicked (Foundation.NSObject sender);
 		
@@ -31,6 +34,11 @@ namespace TestApp
 			if (textField != null) {
 				textField.Dispose ();
 				textField = null;
+			}
+
+			if (topicLabel != null) {
+				topicLabel.Dispose ();
+				topicLabel = null;
 			}
 		}
 	}
