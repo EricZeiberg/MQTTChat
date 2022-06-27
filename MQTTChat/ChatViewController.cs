@@ -17,6 +17,8 @@ namespace TestApp
 	{
 		MqttFactory mqttFactory;
 		IMqttClient mqttClient;
+		Random rnd;
+		int[] colors;
 		private string username;
 		public string Username
 		{
@@ -25,7 +27,6 @@ namespace TestApp
 			{
 				if (string.IsNullOrWhiteSpace(value))
 				{
-					Random rnd = new Random();
 					int num = rnd.Next(1, 999);
 					username = "User" + num;
                 }
@@ -57,7 +58,8 @@ namespace TestApp
 		private string topic;
 		public ChatViewController(IntPtr handle) : base(handle)
 		{
-
+			rnd = new Random();
+			colors = new int[3];
 		}
 
 		public override void ViewDidLoad()
@@ -75,6 +77,9 @@ namespace TestApp
         {
 			View.Window.Title = "Chat (Your name is: " + username + ")";
 			topicLabel.StringValue = "Topic: " + topic;
+			colors[0] = rnd.Next(256);
+			colors[1] = rnd.Next(256);
+			colors[2] = rnd.Next(256);
 		}
 
 		public async Task connect()
@@ -112,6 +117,7 @@ namespace TestApp
 			Dictionary<string, string> dict = new Dictionary<string, string>();
 			dict.Add("clientID", username);
 			dict.Add("message", message);
+			dict.Add("color", encodeColor(colors));
 			string JsonString = JsonConvert.SerializeObject(dict);
 			var applicationMessage = new MqttApplicationMessageBuilder()
 					.WithTopic(topic)
@@ -136,14 +142,43 @@ namespace TestApp
 				Dictionary<string, string> dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(payload);
 				string clientID = dict["clientID"];
 				string text = dict["message"];
-
+				string colorString = dict["color"];
+				int[] colorArray = decodeColor(colorString);
 				Console.WriteLine($"Topic: {topic}. Message Received: {payload}");
 
 				InvokeOnMainThread(() => {
-					messageView.Value = messageView.Value + "\n" + clientID + ": " + text;
+					NSAttributedString clientIDAttr = new NSAttributedString(
+						clientID + ": ",
+						font: NSFont.FromFontName("Helvetica Bold", 12f),
+						foregroundColor: NSColor.FromRgb(colorArray[0], colorArray[1], colorArray[2])
+						);
+					NSAttributedString messageAttr = new NSAttributedString(
+						text + "\n",
+						font: NSFont.FromFontName("Helvetica", 12f)
+						);
+					NSMutableAttributedString finalString = new NSMutableAttributedString(messageView.GetAttributedString());
+					finalString.Append(clientIDAttr);
+					finalString.Append(messageAttr);
+					
+					messageView.TextStorage.SetString(finalString); 
 				});
 			}
 		}
+
+		private string encodeColor(int[] rgb)
+        {
+			return rgb[0] + "-" + rgb[1] + "-" + rgb[2];
+        }
+
+		private int[] decodeColor(string jsonColor)
+        {
+			int[] colors = new int[3];
+			for (int i = 0; i < 3; i++)
+            {
+				colors[i] = int.Parse(jsonColor.Split("-")[i]);
+            }
+			return colors;
+        }
 
 		public override NSObject RepresentedObject
 		{
